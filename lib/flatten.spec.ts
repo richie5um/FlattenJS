@@ -11,19 +11,28 @@ describe('flatten', function () {
         var obj = {};
         var result = Flatten.convert(obj);
         expect(result).toDeepEqual({});
-    })
+
+        var undo = Flatten.undo(result);
+        expect(undo).toDeepEqual(obj);
+    });
 
     it('value', function () {
-        var obj = {a: 1};
+        var obj = { a: 1 };
         var result = Flatten.convert(obj);
         expect(result).toDeepEqual(obj);
-    })
+
+        var undo = Flatten.undo(result);
+        expect(undo).toDeepEqual(obj);
+    });
 
     it('array', function () {
-        var obj = {a: [1,2]};
+        var obj = { a: [1, 2] };
         var result = Flatten.convert(obj);
-        expect(result).toDeepEqual({'a[0]': 1, 'a[1]': 2});
-    })
+        expect(result).toDeepEqual({ 'a[0]': 1, 'a[1]': 2 });
+
+        var undo = Flatten.undo(result);
+        expect(undo).toDeepEqual(obj);
+    });
 
     it('nested array', function () {
         var obj = {
@@ -31,9 +40,28 @@ describe('flatten', function () {
                 b: [1]
             }
         };
+
         var result = Flatten.convert(obj);
-        expect(result).toDeepEqual({'a.b[0]': 1});
-    })
+        expect(result).toDeepEqual({ 'a.b[0]': 1 });
+
+        var undo = Flatten.undo(result);
+        expect(undo).toDeepEqual(obj);
+    });
+
+    it('nested array object', function () {
+        var obj = {
+            a: {
+                b: [{ c: 1 }]
+            }
+        };
+
+        var result = Flatten.convert(obj);
+        expect(result).toDeepEqual({ 'a.b[0].c': 1 });
+
+        var undo = Flatten.undo(result);
+        expect(undo).toDeepEqual(obj);
+    });
+
 
     it('nested array', function () {
         var obj = {
@@ -45,6 +73,7 @@ describe('flatten', function () {
             },
             e: '!'
         };
+
         var result = Flatten.convert(obj);
         expect(result).toDeepEqual({
             'a.b[0]': 1,
@@ -52,7 +81,8 @@ describe('flatten', function () {
             'a.d': 'world',
             'e': '!'
         });
-    })
 
-
+        var undo = Flatten.undo(result);
+        expect(undo).toDeepEqual(obj);
+    });
 });
