@@ -1,11 +1,11 @@
 module.exports = () => {
   return {
     files: [
-      '!src/**/*.spec.ts',
-      'src/**/*.ts'
+      '!lib/**/*.spec.ts',
+      'lib/**/*.ts'
     ],
     tests: [
-      'src/**/*.spec.ts'
+      'lib/**/*.spec.ts'
     ],
     debug: true,
     testFramework: 'jasmine',

@@ -2,9 +2,9 @@
   "name": "flatten",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "make test"
+    "test": "tsc || ./node_modules/.bin/jasmine"
   },
   "author": "",
   "license": "ISC",
