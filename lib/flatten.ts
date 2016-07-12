@@ -5,17 +5,24 @@ export function undo(params) {
 }
 
 export function convert(obj) {
-    let result = {};
-    _.each(obj, (value, key) => {
+    return _.transform(obj, function (result, value, key) {
         if (_.isObject(value)) {
-            let flatObj = convert(value);
-            _.each(flatObj, (o, k) => {
-                let flatKey = _.isArray(value) ? `${key}[${k}]` : `${key}.${k}`;
-                result[flatKey] = o;
-            })
+            let flatMap = _.mapKeys(convert(value), function (mvalue, mkey) {
+                if (_.isArray(value)) {
+                    let index = mkey.indexOf('.');
+                    if (-1 !== index) {
+                        return `${key}[${mkey.slice(0, index)}]${mkey.slice(index)}`;
+                    }
+                    return `${key}[${mkey}]`;
+                }
+                return `${key}.${mkey}`;
+            });
+
+            _.assign(result, flatMap);
         } else {
             result[key] = value;
         }
-    });
-    return result;
+
+        return result;
+    }, {});
 }
