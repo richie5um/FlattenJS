@@ -25,7 +25,7 @@
             "name": "Tests",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/src/flatten.spec.ts",
+            "program": "${workspaceRoot}/lib/flatten.spec.ts",
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",
