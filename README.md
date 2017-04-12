@@ -10,7 +10,7 @@ A small simple library to easily flatten / unflatten JSON objects. Uses square b
 
 ## Usage
 
-    var FlattenJS = require('FlattenJS');
+    var FlattenJS = require('flattenjs');
 
     // Simple
 
