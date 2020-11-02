@@ -1,21 +1,26 @@
 {
-  "name": "flattenjs",
-  "version": "1.0.4",
-  "description": "",
-  "main": "lib/flatten.js",
-  "scripts": {
-    "test": "tsc || ./node_modules/.bin/jasmine"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/richie5um/flattenjs.git"
-  },
-  "author": "Rich Somerfield",
-  "license": "ISC",
-  "dependencies": {
-    "lodash": "^4.13.1"
-  },
-  "devDependencies": {
-    "jasmine": "^2.4.1"
-  }
+    "name": "flattenjs",
+    "version": "2.1.2",
+    "description": "",
+    "main": "lib/flatten.js",
+    "scripts": {
+        "build": "tsc",
+        "prepare": "npm run build && npm run test",
+        "test": "tsc && ./node_modules/.bin/jasmine"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/richie5um/flattenjs.git"
+    },
+    "author": "Rich Somerfield",
+    "license": "ISC",
+    "dependencies": {
+        "lodash": "^4.17.20"
+    },
+    "devDependencies": {
+        "@types/jasmine": "^3.4.4",
+        "@types/node": "^12.11.5",
+        "jasmine": "^3.5.0",
+        "typescript": "^3.6.4"
+    }
 }
