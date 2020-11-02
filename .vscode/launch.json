@@ -42,6 +42,27 @@
             "outDir": null
         },
         {
+            "name": "Debug",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/lib/index.spec.ts",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "externalConsole": false,
+            "sourceMaps": true,
+            "outDir": null
+        },
+
+        {
             "name": "Attach",
             "type": "node",
             "request": "attach",

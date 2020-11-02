@@ -1,9 +1,14 @@
 let _ = require('lodash');
+import MatchersUtil = jasmine.MatchersUtil;
+import CustomMatcherFactories = jasmine.CustomMatcherFactories;
+import CustomEqualityTester = jasmine.CustomEqualityTester;
+import CustomMatcher = jasmine.CustomMatcher;
+import CustomMatcherResult = jasmine.CustomMatcherResult;
 
-export let matchers = {
-    toDeepEqual: (util, customEqualityTesters) => {
+export const MyCustomMatchers: CustomMatcherFactories = {
+    toDeepEqual: (_util: MatchersUtil, _customEqualityTesters: CustomEqualityTester[]): CustomMatcher => {
         return {
-            compare: (actual, expected) => {
+            compare: (actual, expected): CustomMatcherResult => {
                 let result = {
                     pass: _.isEqual(actual, expected),
                     message: undefined

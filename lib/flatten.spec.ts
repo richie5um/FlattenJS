@@ -1,37 +1,37 @@
-import * as Flatten from './flatten';
-import * as CustomMatchers from './customMatchers';
+import { flatten, inflate } from './flatten';
+import { MyCustomMatchers } from './customMatchers';
 
 describe('flatten', function () {
 
     beforeAll(function () {
-        jasmine.addMatchers(CustomMatchers.matchers);
+        jasmine.addMatchers(MyCustomMatchers);
     });
 
     it('simple', function () {
         var obj = {};
-        var result = Flatten.convert(obj);
-        expect(result).toDeepEqual({});
+        var flattened = flatten(obj);
+        expect(flattened).toDeepEqual({});
 
-        var undo = Flatten.undo(result);
-        expect(undo).toDeepEqual(obj);
+        var inflated = inflate(flattened);
+        expect(inflated).toDeepEqual(obj);
     });
 
     it('value', function () {
         var obj = { a: 1 };
-        var result = Flatten.convert(obj);
-        expect(result).toDeepEqual(obj);
+        var flattened = flatten(obj);
+        expect(flattened).toDeepEqual(obj);
 
-        var undo = Flatten.undo(result);
-        expect(undo).toDeepEqual(obj);
+        var inflated = inflate(flattened);
+        expect(inflated).toDeepEqual(obj);
     });
 
     it('array', function () {
         var obj = { a: [1, 2] };
-        var result = Flatten.convert(obj);
-        expect(result).toDeepEqual({ 'a[0]': 1, 'a[1]': 2 });
+        var flattened = flatten(obj);
+        expect(flattened).toDeepEqual({ 'a[0]': 1, 'a[1]': 2 });
 
-        var undo = Flatten.undo(result);
-        expect(undo).toDeepEqual(obj);
+        var inflated = inflate(flattened);
+        expect(inflated).toDeepEqual(obj);
     });
 
     it('nested array', function () {
@@ -41,11 +41,11 @@ describe('flatten', function () {
             }
         };
 
-        var result = Flatten.convert(obj);
-        expect(result).toDeepEqual({ 'a.b[0]': 1 });
+        var flattened = flatten(obj);
+        expect(flattened).toDeepEqual({ 'a.b[0]': 1 });
 
-        var undo = Flatten.undo(result);
-        expect(undo).toDeepEqual(obj);
+        var inflated = inflate(flattened);
+        expect(inflated).toDeepEqual(obj);
     });
 
     it('nested array object', function () {
@@ -55,13 +55,27 @@ describe('flatten', function () {
             }
         };
 
-        var result = Flatten.convert(obj);
-        expect(result).toDeepEqual({ 'a.b[0].c': 1 });
+        var flattened = flatten(obj);
+        expect(flattened).toDeepEqual({ 'a.b[0].c': 1 });
 
-        var undo = Flatten.undo(result);
-        expect(undo).toDeepEqual(obj);
+        var inflated = inflate(flattened);
+        expect(inflated).toDeepEqual(obj);
     });
 
+    it('empty objects', function () {
+        var obj = {
+            a: {
+                b: [{ c: {} }]
+            },
+            d: {}
+        };
+
+        var flattened = flatten(obj, true);
+        expect(flattened).toDeepEqual({ 'a.b[0].c': {}, 'd': {} });
+
+        var inflated = inflate(flattened);
+        expect(inflated).toDeepEqual(obj);
+    });
 
     it('nested array', function () {
         var obj = {
@@ -74,15 +88,15 @@ describe('flatten', function () {
             e: '!'
         };
 
-        var result = Flatten.convert(obj);
-        expect(result).toDeepEqual({
+        var flattened = flatten(obj);
+        expect(flattened).toDeepEqual({
             'a.b[0]': 1,
             'a.b[1].c': 'hello',
             'a.d': 'world',
             'e': '!'
         });
 
-        var undo = Flatten.undo(result);
-        expect(undo).toDeepEqual(obj);
+        var inflated = inflate(flattened);
+        expect(inflated).toDeepEqual(obj);
     });
 });

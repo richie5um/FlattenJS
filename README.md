@@ -8,9 +8,13 @@ A small simple library to easily flatten / unflatten JSON objects. Uses square b
 
     npm install flattenjs --save
 
+## Updates
+
+* 2.1.0: Added opt-in 'preserveEmpty'. Updated lodash dependency. @adil
+
 ## Usage
 
-    var FlattenJS = require('flattenjs');
+    import { flatten, inflate } from 'flattenjs'
 
     // Simple
 
@@ -18,11 +22,11 @@ A small simple library to easily flatten / unflatten JSON objects. Uses square b
         a: true
     };
 
-    var flattened = FlattenJS.convert(obj);
+    var flattened = flatten(obj);
     console.log(flattened);
     // { a: true }
 
-    var unflattened = FlattenJS.undo(flattened);
+    var unflattened = inflate(flattened);
     console.log(unflattened);
     // { a: true }
 
@@ -36,7 +40,7 @@ A small simple library to easily flatten / unflatten JSON objects. Uses square b
         }
     };
 
-    flattened = FlattenJS.convert(obj);
+    flattened = flatten(obj);
     console.log(flattened);
     // {
     //     'a': true,
@@ -47,7 +51,7 @@ A small simple library to easily flatten / unflatten JSON objects. Uses square b
     //     'b.bb[4]': 4
     // }
 
-    unflattened = FlattenJS.undo(flattened);
+    unflattened = inflate(flattened);
     console.log(unflattened);
     // { a: true, b: { bb: [ 0, 1, 2, 3, 4 ] } }
 
@@ -64,7 +68,7 @@ A small simple library to easily flatten / unflatten JSON objects. Uses square b
         }
     };
 
-    flattened = FlattenJS.convert(obj);
+    flattened = flatten(obj);
     console.log(flattened);
     // {
     //     'a': true,
@@ -80,5 +84,27 @@ A small simple library to easily flatten / unflatten JSON objects. Uses square b
     //     'b.ba[1].bab[4]': 4
     // }
 
-    unflattened = FlattenJS.undo(flattened);
+    unflattened = inflate(flattened);
     console.log(unflattened);
+
+## Preserve Empty Objects/Arrays
+
+This is now available as an opt-in option in flattenjs@2.1.0. Set the second parameter to 'flatten(obj, true)' to enable the preserveEmpty capability.
+
+    var Flatten = require('./flatten');
+
+    var test = {
+        a: { 
+            b: 1, 
+            c: [], 
+            d: {},
+            f: [{ g: {} }]
+        },
+        e: {}
+    };
+
+    var flattened = Flatten.flatten(test, true);
+    console.log(JSON.stringify(flattened, undefined, 2));
+
+    var inflated = Flatten.inflate(flattened);
+    console.log(JSON.stringify(inflated, undefined, 2));
