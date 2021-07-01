@@ -99,4 +99,26 @@ describe('flatten', function () {
         var inflated = inflate(flattened);
         expect(inflated).toDeepEqual(obj);
     });
+
+    it('undefined array items', function () {
+        var obj = {
+            a: {
+                b: [, 1, 2, undefined]
+            }
+        };
+
+        var flattened = flatten(obj, false);
+        expect(flattened).toDeepEqual({
+            'a.b[0]': undefined,
+            'a.b[1]': 1,
+            'a.b[2]': 2,
+            'a.b[3]': undefined
+        });
+
+        var inflated = inflate(flattened);
+        expect(inflated).toDeepEqual(obj);
+
+        console.log(obj.a.b);
+        console.log(inflated.a.b);
+    });
 });
